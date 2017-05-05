@@ -1,0 +1,6 @@
+# settings
+/php.ini
+/src/cfg/local.ini
+
+# storage
+/logs

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [ "${1}"x == x ]; then
+    port=80
+else
+    port=${1}
+fi
+docker run --name declare --restart always -p ${port}:80 -v $(cd `dirname ${0}`; pwd):/var/www -d registry.aliyuncs.com/syncxplus/php:7.1.4
