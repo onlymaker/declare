@@ -7,12 +7,29 @@ namespace Composer\Autoload;
 class ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a
 {
     public static $files = array (
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '45e8c92354af155465588409ef796dbc' => __DIR__ . '/..' . '/bcosca/fatfree/lib/base.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'R' => 
+        array (
+            'Ramsey\\Uuid\\' => 12,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Ramsey\\Uuid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ramsey/uuid/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
