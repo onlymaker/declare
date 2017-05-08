@@ -2,6 +2,8 @@
 
 namespace app;
 
+use data\Database;
+use DB\SQL\Mapper;
 use Ramsey\Uuid\Uuid;
 
 class Creator
@@ -16,8 +18,15 @@ class Creator
         $f3->set('baseSubscribe', $this->baseSubscribe);
         $f3->set('signature', $this->signature);
         $f3->set('extendMessage', $this->extendMessage);
+        $xml = \Template::instance()->render('declare-template.xml');
+
+        $mapper = new Mapper(Database::mysql(), 'export');
+        $mapper['guid'] = $f3->get('guid');
+        $mapper['xml'] = $xml;
+        $mapper->save();
+
         header('Content-Type:application/xml');
-        echo \Template::instance()->render('declare-template.xml');
+        echo $xml;
     }
 
     private $expOrderInfo = [
