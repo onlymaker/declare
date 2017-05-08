@@ -8,7 +8,8 @@ class Receiver
 {
     function receive($f3)
     {
-        $xml = file_get_contents($f3->UI . 'notify.xml');
+        //$xml = file_get_contents($f3->UI . 'notify.xml');
+        $xml = $_POST['message'];
         $parser = xml_parser_create();
         xml_parse_into_struct($parser, $xml, $result, $index);
 
