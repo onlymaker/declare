@@ -4,6 +4,7 @@ namespace app;
 
 use data\Database;
 use DB\SQL\Mapper;
+use Httpful\Mime;
 use Ramsey\Uuid\Uuid;
 
 class Creator
@@ -25,8 +26,13 @@ class Creator
         $mapper['xml'] = $xml;
         $mapper->save();
 
-        header('Content-Type:application/xml');
-        echo $xml;
+        //header('Content-Type:application/xml');
+        //echo $xml;
+        $response = \Httpful\Request::post($f3->get('DECLARE_URL'))
+            ->body($xml)
+            ->sendsType(Mime::FORM)
+            ->send();
+        var_dump($response);
     }
 
     private $expOrderInfo = [

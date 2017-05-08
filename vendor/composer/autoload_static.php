@@ -25,11 +25,22 @@ class ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'H' => 
+        array (
+            'Httpful' => 
+            array (
+                0 => __DIR__ . '/..' . '/nategood/httpful/src',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9eb666f68e6be9d4cbaf05aab8b28d7a::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
