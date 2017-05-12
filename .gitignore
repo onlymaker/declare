@@ -3,4 +3,5 @@
 /src/cfg/local.ini
 
 # storage
-/logs
+/logs/
+/html/excel/

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <link href="http://cdn.bootcss.com/zui/1.5.0/css/zui.min.css" rel="stylesheet"/>
+    <style>
+        .form-control {
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form id="upload-form" enctype="multipart/form-data">
+        <input class="form-control" type="file" name="file"/>
+        <button class="btn btn-default clear" type="button">清除</button>
+        <button class="btn btn-primary upload" type="button">上传</button>
+    </form>
+    <hr/>
+    <p class="help-block">Upload:</p>
+    <table class="table"></table>
+</div>
+<script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(".clear").on("click", clear);
+        $(".upload").on("click", upload);
+    })
+
+    function clear() {
+        $("input[type=file]").val("");
+        $("table").empty();
+    }
+
+    function upload() {
+        // 不能上传 gif
+        $.ajax({
+            url: "upload",
+            type: "POST",
+            cache: false,
+            data: new FormData(document.getElementById("upload-form")),
+            contentType: false,
+            processData: false
+        })
+            .done(function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                if (data.type.indexOf('ms-excel') == -1) {
+                    data.url = 'invalid file type';
+                } else {
+                    data.url = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
+                }
+                var html = '<tr><td>' + data.name + '</td><td>' + data.url + '</td></tr>';
+                $(".table").append(html);
+            })
+            .fail(console.log)
+    }
+</script>
+</body>
+</html>

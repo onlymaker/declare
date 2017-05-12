@@ -232,7 +232,7 @@ class Web extends Prefab {
 			foreach ($files as $file) {
 				if (empty($file['name']))
 					continue;
-				$base=basename($file['name']);
+				$base=preg_replace('/^.+[\\\\\\/]/', '', $file['name']);
 				$file['name']=$dir.
 					($slug && preg_match('/(.+?)(\.\w+)?$/',$base,$parts)?
 						(is_callable($slug)?

@@ -40,6 +40,7 @@ call_user_func(function ($f3) {
 
             $f3->mset([
                 'UI' => SYSTEM . '/src/tpl/',
+                'UPLOADS' => SYSTEM . '/html/excel/',
                 'ONERROR' => function ($f3) {
                     $error = $f3->get('ERROR');
 
