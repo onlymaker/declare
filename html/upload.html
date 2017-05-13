@@ -2,15 +2,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload</title>
-    <link href="http://cdn.bootcss.com/zui/1.5.0/css/zui.min.css" rel="stylesheet"/>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <style>
         .form-control {
-            margin: 10px auto;
+            margin: 20px auto;
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <p class="help-block">上传的excel文件格式如图所示：</p>
+    <div class="thumbnail"><img src="excel.png"></div>
+    <p class="help-block">excel内容不要超过100行</p>
+
     <form id="upload-form" enctype="multipart/form-data">
         <input class="form-control" type="file" name="file"/>
         <button class="btn btn-default clear" type="button">清除</button>
@@ -33,6 +38,8 @@
     }
 
     function upload() {
+        $(".btn.upload").attr("disabled", true);
+        $(".btn.upload").append("<i class='fa fa-spinner fa-spin'></i>");
         // 不能上传 gif
         $.ajax({
             url: "upload",
@@ -54,6 +61,10 @@
                 $(".table").append(html);
             })
             .fail(console.log)
+            .complete(function () {
+                $(".btn.upload").removeAttr("disabled");
+                $(".fa.fa-spinner.fa-spin").remove();
+            })
     }
 </script>
 </body>

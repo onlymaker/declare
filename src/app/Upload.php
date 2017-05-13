@@ -36,6 +36,33 @@ class Upload extends \Web
     }
 
     function parseExcel($file) {
-        // TODO: parse excel
+        @ini_set('memory_limit', '256M');
+        $excel = \PHPExcel_IOFactory::load($file);
+        $sheet = $excel->getSheet(0);
+        $rows = $sheet->toArray();
+        $f3 = \Base::instance();
+        $creator = new Creator();
+        foreach ($rows as $i => $data) {
+            $xml = $creator->buildXml($f3, $data[0], $data[1], $data[2]);
+            if ($xml == $data[0]) {
+                $f3->log(
+                    '{excel} row {i}: {id} not found',
+                    [
+                        'excel' => $file,
+                        'i' =>$i,
+                        'id' => $data[0]
+                    ]
+                );
+            } else {
+                $f3->log(
+                    '{excel} row {i}: {id} handled',
+                    [
+                        'excel' => $file,
+                        'i' =>$i,
+                        'id' => $data[0]
+                    ]
+                );
+            }
+        }
     }
 }

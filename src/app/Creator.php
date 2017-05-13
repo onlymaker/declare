@@ -13,27 +13,34 @@ class Creator
 {
     function create($f3)
     {
-        $xml = $this->buildXml($f3);
-        header('Content-Type:application/xml');
-        echo $xml;
-        ob_start();
-        var_dump(Request::post($f3->get('DECLARE_URL'))->body($xml)->sendsType(Mime::FORM)->send());
-        $f3->log(ob_get_clean());
+        $xml = $this->buildXml($f3, $_REQUEST['id'], $_REQUEST['cc'], $_REQUEST['ap']);
+        //header('Content-Type:application/xml');
+        //echo $xml;
+        if ($xml != $_REQUEST['id']) {
+            ob_start();
+            var_dump(Request::post($f3->get('DECLARE_URL'))->body($xml)->sendsType(Mime::FORM)->send());
+            $f3->log(ob_get_clean());
+        } else {
+            echo $_REQUEST['id'] . ' not found';
+        }
     }
 
-    function buildXml($f3) {
-        $f3->set('id', $_REQUEST['id']);
-        $f3->set('ap', $_REQUEST['ap']);
-        $f3->set('cc', $_REQUEST['cc']);
+    function buildXml($f3, $id, $cc, $ap) {
+        $f3->set('id', $id);
+        $f3->set('cc', $cc);
+        $f3->set('ap', $ap);
+
+        $mapper = new Mapper(Database::mysql(), 'export');
+        $mapper->load(['trace_id = ?', $f3->get('id')]);
+        if (!$mapper->dry()) {
+            return $mapper['xml']; // trace id already existed in export
+        }
 
         $odb = OrderDB::mysql();
-
         $order = new Mapper($odb, 'order_item');
         $order->load(['trace_id = ?', $f3->get('id')]);
-
         if ($order->dry()) {
-            $f3->log('Can not find order: id');
-            return $f3->get('id');
+            return $f3->get('id'); // trace id not found in order
         }
 
         $model = new Mapper($odb, 'prototype');
@@ -56,8 +63,8 @@ class Creator
         $f3->set('extendMessage', $this->extendMessage);
         $xml = \Template::instance()->render('declare-template.xml');
 
-        $mapper = new Mapper(Database::mysql(), 'export');
         $mapper['guid'] = $f3->get('guid');
+        $mapper['trace_id'] = $f3->get('id');
         $mapper['xml'] = $xml;
         $mapper->save();
 
