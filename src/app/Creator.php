@@ -17,9 +17,9 @@ class Creator
         //header('Content-Type:application/xml');
         //echo $xml;
         if ($xml != $_REQUEST['id']) {
-            ob_start();
+            echo '<pre>';
             var_dump(Request::post($f3->get('DECLARE_URL'))->body($xml)->sendsType(Mime::FORM)->send());
-            $f3->log(ob_get_clean());
+            echo '</pre>';
         } else {
             echo $_REQUEST['id'] . ' not found';
         }
