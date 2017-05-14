@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
-    <title>Upload</title>
-    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <include href="common/header.html"/>
     <style>
         .form-control {
             margin: 20px auto;
@@ -11,6 +8,7 @@
     </style>
 </head>
 <body>
+<include href="common/navbar.html"/>
 <div class="container">
     <p class="help-block">上传的excel文件格式如图所示：</p>
     <div class="thumbnail"><img src="excel.png"></div>
@@ -25,7 +23,6 @@
     <p class="help-block">Upload:</p>
     <table class="table"></table>
 </div>
-<script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script>
     $(function () {
         $(".clear").on("click", clear);
@@ -42,7 +39,7 @@
         $(".btn.upload").append("<i class='fa fa-spinner fa-spin'></i>");
         // 不能上传 gif
         $.ajax({
-            url: "upload",
+            url: "{{@BASE}}/upload",
             type: "POST",
             cache: false,
             data: new FormData(document.getElementById("upload-form")),

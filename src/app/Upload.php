@@ -7,6 +7,12 @@ class Upload extends \Web
 {
     use Url;
 
+    function get($f3)
+    {
+        $f3->set('title', 'Upload');
+        echo \Template::instance()->render('upload.html');
+    }
+
     function upload($f3)
     {
         list($receive) = array_keys(parent::receive(null, true, false));

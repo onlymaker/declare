@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
-    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <title>Index</title>
+    <include href="common/header.html"/>
 </head>
 <body>
+<include href="common/navbar.html"/>
 <div class="container">
     <table class="table">
         <repeat group="{{@pageContent}}" value="{{@data}}">
@@ -17,12 +16,10 @@
     </table>
     <ul class="pagination"></ul>
 </div>
-<script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script>
     $(function () {
         var html = "";
         var pageCount = "{{@pageCount}}";
-        console.log(pageCount);
         for (var i = 1; i <= pageCount; i++) {
             var url = "{{@BASE}}?pageNo=" + i;
             html += '<li><a href="' + url + '">' + i + "</a></li>";

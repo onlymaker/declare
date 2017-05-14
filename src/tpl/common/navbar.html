@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="{{@BASE}}/">首页</a></li>
+            <li><a href="{{@BASE}}/upload">Upload</a></li>
+        </ul>
+    </div>
+</nav>
+<div id="nav-holder"></div>
+<script>
+    $(function () {
+        $("#nav-holder").css("height", $("nav.navbar-fixed-top").height());
+        var base = "{{@BASE}}";
+        var host = location.host;
+        var prefix = location.protocol + "//" + location.host + base;
+        var url = location.href.substr(prefix.length);
+        if (url.indexOf("?") != -1) {
+            url = url.substr(0, url.indexOf("?"));
+        }
+        if (url.indexOf("#") != -1) {
+            url = url.substr(0, url.indexOf("#"));
+        }
+        $("nav.navbar-fixed-top a").each(function () {
+            var href = $(this).attr("href");
+            console.log("href: " + href + ", url: " + url);
+            if (href == url) {
+                $(this).removeAttr("href");
+                $(this).parent().addClass("active");
+                return false;
+            }
+        })
+    })
+</script>

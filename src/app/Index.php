@@ -2,10 +2,11 @@
 
 namespace app;
 
+use app\common\AppBase;
 use data\Database;
 use DB\SQL\Mapper;
 
-class Index
+class Index extends AppBase
 {
     function get($f3)
     {
@@ -16,6 +17,7 @@ class Index
         if ($pageNo < 1) $pageNo = 1;
         else if ($pageNo > $count) $pageNo = $count;
         $page = $mapper->paginate($pageNo - 1, $size);
+        $f3->set('title', 'Index');
         $f3->set('pageNo', $pageNo);
         $f3->set('pageContent', $page['subset']);
         $f3->set('pageCount', $count);
