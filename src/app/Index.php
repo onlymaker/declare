@@ -41,7 +41,13 @@ class Index extends AppBase
             $xml = str_replace('{{@serial}}', $next, $mapper['xml']);
             $response = Request::post($f3->get('DECLARE_URL'))->body(['xml' => $xml])->sendsType(Mime::FORM)->send();
             $this->error['code'] = 0;
-            echo $this->jsonResponse(['body' => $response->body, 'raw' => $response->raw_body]);
+            $receiver = new Receiver();
+            $result = $receiver->parseResult($response->raw_body);
+            echo $this->jsonResponse([
+                'info' => $result['return_info'],
+                'status' => $result['return_status'],
+                'xml' => $result['xml']
+            ]);
         }
     }
 }

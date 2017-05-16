@@ -38,7 +38,7 @@
                     console.log(data);
                     var json = JSON.parse(data);
                     if (json.error.code == 0) {
-                        alert(json.body);
+                        alert(json.info);
                     } else {
                         alert(json.error.text);
                     }

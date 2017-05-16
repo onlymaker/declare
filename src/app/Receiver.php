@@ -10,6 +10,12 @@ class Receiver
     {
         //$xml = file_get_contents($f3->UI . 'notify.xml');
         $xml = $_POST['message'];
+        $mapper = $this->parseResult($xml);
+        foreach($mapper->fields() as $field) var_dump($mapper->$field);
+    }
+
+    function parseResult($xml)
+    {
         $parser = xml_parser_create();
         xml_parse_into_struct($parser, $xml, $result, $index);
 
@@ -28,6 +34,6 @@ class Receiver
         $mapper['xml'] = $xml;
         $mapper->save();
 
-        foreach($mapper->fields() as $field) var_dump($mapper->$field);
+        return $mapper;
     }
 }
