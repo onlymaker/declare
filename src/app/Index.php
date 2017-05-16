@@ -31,7 +31,7 @@ class Index extends AppBase
         $mapper = new Mapper(Database::mysql(), 'export');
         $mapper->load(['id = ?', $_POST['id']]);
         if ($mapper->dry()) {
-            $this->error['text'] = 'Can not find xml';
+            $this->error['text'] = 'Can not find xml with id [' . $_POST['id'] . ']';
             echo $this->jsonResponse();
         } else {
             $status = new Mapper(Database::mysql(), 'export');

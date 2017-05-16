@@ -9,6 +9,7 @@
         <repeat group="{{@pageContent}}" value="{{@data}}">
             <tr>
                 <td>{{@data['trace_id']}}</td>
+                <td><a href="{{@BASE}}/edit?id={{@data['id']}}">xml</a></td>
                 <td>{{@data['return_info']}}</td>
                 <check if="{{@data['status'] == 0}}">
                     <true><td><div class="btn btn-primary submit" data="{{@data['id']}}">Report</div></td></true>
@@ -39,7 +40,7 @@
                     var json = JSON.parse(data);
                     if (json.error.code == 0) {
                         alert(json.info);
-                        if (!info) {
+                        if (json.info != info) {
                             location.reload(true);
                         }
                     } else {

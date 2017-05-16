@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <include href="common/header.html"/>
+    <style>
+        textarea {
+            margin: 20px auto;
+        }
+        .btn-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<include href="common/navbar.html"/>
+<div class="container">
+    <div class="form-group">
+        <textarea class="form-control">{{@data['xml']}}</textarea>
+        <div class="btn-group">
+            <div class="btn btn-default cancel">取消</div>
+            <div class="btn btn-primary submit"  data="{{@data['id']}}">修改</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("textarea").css('height', $(window).height() - $("nav.navbar-fixed-top").height() - $(".btn-group").height() - 60);
+        $(".cancel").click(home);
+        $(".submit").click(function () {
+            var id = $(this).attr("data");
+            $(".submit").attr("disabled", true);
+            $(this).append("<i class='fa fa-spinner fa-spin'></i>");
+            $.post("{{@BASE}}/edit", {id: id, xml: $("textarea").val()})
+                .done(function (data) {
+                    console.log(data);
+                    var json = JSON.parse(data);
+                    if (json.error.code == 0) {
+                        alert("修改成功");
+                        home();
+                    } else {
+                        alert(json.error.text);
+                    }
+                })
+                .fail(alert)
+                .complete(function () {
+                    $(".submit").removeAttr("disabled");
+                    $(".fa.fa-spinner.fa-spin").remove();
+                })
+        })
+    })
+    function home() {
+        location.href = "{{@BASE}}/";
+    }
+</script>
+</body>
+</html>
