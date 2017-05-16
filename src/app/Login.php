@@ -2,8 +2,6 @@
 namespace app;
 
 use app\common\Url;
-use data\Database;
-use Ramsey\Uuid\Uuid;
 
 class Login
 {
@@ -22,7 +20,7 @@ class Login
         $f3->log('User login: ' . $username);
 
         //$query = Database::mysql()->exec("SELECT * FROM user WHERE username = '$username' AND PASSWORD = md5(concat('$password', salt))");
-        $query = true;
+        $query = in_array($username, ['debug', 'onlymaker']);
 
         if ($query) {
             $f3->set('SESSION.AUTHENTICATION', $username);
