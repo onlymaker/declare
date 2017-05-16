@@ -11,6 +11,10 @@
                 <td>{{@data['trace_id']}}</td>
                 <td>{{@data['guid']}}</td>
                 <td>{{@data['status']}}</td>
+                <check if="{{@data['status'] == 0}}">
+                    <true><td><div class="btn btn-primary submit" data="{{@data['id']}}">Report</div></td></true>
+                    <false><td></td></false>
+                </check>
             </tr>
         </repeat>
     </table>
@@ -25,6 +29,26 @@
             html += '<li><a href="' + url + '">' + i + "</a></li>";
         }
         $(".pagination").append(html);
+        $(".submit").click(function () {
+            var id = $(this).attr("data");
+            $(".submit").attr("disabled", true);
+            $(this).append("<i class='fa fa-spinner fa-spin'></i>");
+            $.post("{{@BASE}}/", {id: id})
+                .done(function (data) {
+                    console.log(data);
+                    var json = JSON.parse(data);
+                    if (json.error.code == 0) {
+                        alert(json.body);
+                    } else {
+                        alert(json.error.text);
+                    }
+                })
+                .fail(alert)
+                .complete(function () {
+                    $(".submit").removeAttr("disabled");
+                    $(".fa.fa-spinner.fa-spin").remove();
+                })
+        })
     })
 </script>
 </body>

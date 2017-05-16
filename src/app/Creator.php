@@ -18,7 +18,7 @@ class Creator
         //echo $xml;
         if ($xml != $_REQUEST['id']) {
             echo '<pre>';
-            var_dump(Request::post($f3->get('DECLARE_URL'))->body($xml)->sendsType(Mime::FORM)->send());
+            var_dump(Request::post($f3->get('DECLARE_URL'))->body(['xml' => $xml])->sendsType(Mime::FORM)->send());
             echo '</pre>';
         } else {
             echo $_REQUEST['id'] . ' not found';
@@ -112,8 +112,8 @@ class Creator
         $this->expInventoryHead['ebcName'] = $f3->get('EBCNAME');
         $this->expInventoryHead['productCode'] = '9151010032742290X5';
         $this->expInventoryHead['productName'] = '成都欧魅时尚科技有限责任公司';
-        $this->expInventoryHead['logisticsCode'] = '510198Z006';
-        $this->expInventoryHead['logisticsName'] = '中国邮政速递物流股份有限公司';
+        $this->expInventoryHead['logisticsCode'] = '5101982029';
+        $this->expInventoryHead['logisticsName'] = '四川省邮政速递服务有限公司';
         $this->expInventoryHead['logisticsNo'] = $contact['distribution_number'];
         $this->expInventoryHead['preNo'] = '';
         $this->expInventoryHead['invtNo'] = '';
@@ -122,10 +122,10 @@ class Creator
         $this->expInventoryHead['customsCode'] = 7902;
         $this->expInventoryHead['portCode'] = 7902;
         $this->expInventoryHead['ieDate'] = date('Ymd');
-        $this->expInventoryHead['agentCode'] = '9151010032742290X5';
+        $this->expInventoryHead['agentCode'] = '510196552A';
         $this->expInventoryHead['agentName'] = '成都欧魅时尚科技有限责任公司';
-        $this->expInventoryHead['areaCode'] = '';
-        $this->expInventoryHead['areaName'] = '';
+        $this->expInventoryHead['areaCode'] = '5101982029';
+        $this->expInventoryHead['areaName'] = '四川省邮政速递服务有限公司';
         $this->expInventoryHead['tradeMode'] = 9610;
         $this->expInventoryHead['trafMode'] = 5;
         $this->expInventoryHead['trafNo'] = '';
@@ -206,10 +206,10 @@ class Creator
         $this->expInventoryList['currency'] = 142;
         $this->expInventoryList['qty'] = 1;
         $this->expInventoryList['qty1'] = 1;
-        $this->expInventoryList['qty2'] = '';
-        $this->expInventoryList['unit'] = 011;
-        $this->expInventoryList['unit1'] = 011;
-        $this->expInventoryList['unit2'] = '';
+        $this->expInventoryList['qty2'] = 0;
+        $this->expInventoryList['unit'] = '011';
+        $this->expInventoryList['unit1'] = '011';
+        $this->expInventoryList['unit2'] = '011';
         $this->expInventoryList['price'] = $order['price'];
         $this->expInventoryList['totalPrice'] = $order['price'];
         $this->expInventoryList['note'] = '';
