@@ -30,6 +30,7 @@
         $(".pagination").append(html);
         $(".submit").click(function () {
             var id = $(this).attr("data");
+            var info = $(this).parent().prev().text();
             $(".submit").attr("disabled", true);
             $(this).append("<i class='fa fa-spinner fa-spin'></i>");
             $.post("{{@BASE}}/", {id: id})
@@ -38,6 +39,9 @@
                     var json = JSON.parse(data);
                     if (json.error.code == 0) {
                         alert(json.info);
+                        if (!info) {
+                            location.reload(true);
+                        }
                     } else {
                         alert(json.error.text);
                     }
