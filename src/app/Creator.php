@@ -63,7 +63,6 @@ class Creator
         $f3->set('extendMessage', $this->extendMessage);
         $xml = \Template::instance()->render('declare-template.xml');
 
-        $mapper['guid'] = $f3->get('guid');
         $mapper['trace_id'] = $f3->get('id');
         $mapper['xml'] = $xml;
         $mapper->save();

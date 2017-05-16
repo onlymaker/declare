@@ -6,25 +6,12 @@ use declaration;
 DROP TABLE IF EXISTS export;
 CREATE TABLE export (
   id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  guid CHAR(36) NOT NULL,
   trace_id VARCHAR(50) NOT NULL,
   xml TEXT,
   status TINYINT(1) DEFAULT 0,
-  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  UNIQUE INDEX (guid)
-);
-
-DROP TABLE IF EXISTS notify;
-CREATE TABLE notify (
-  id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  guid CHAR(36) NOT NULL,
-  return_guid CHAR(36) DEFAULT '',
-  return_time TIMESTAMP DEFAULT NULL,
   return_info VARCHAR(100) DEFAULT '',
   return_status TINYINT(3) DEFAULT 0,
-  xml TEXT,
+  return_xml TEXT,
   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  INDEX (guid)
+  PRIMARY KEY (id)
 );

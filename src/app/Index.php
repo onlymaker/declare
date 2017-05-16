@@ -39,15 +39,48 @@ class Index extends AppBase
             $status->load();
             $next = ($status['max'] ?? 0) + 1;
             $xml = str_replace('{{@serial}}', $next, $mapper['xml']);
-            $response = Request::post($f3->get('DECLARE_URL'))->body(['xml' => $xml])->sendsType(Mime::FORM)->send();
+
+            if (!$mapper['return_xml']) {
+                $response = Request::post($f3->get('DECLARE_URL'))->body(['xml' => $xml])->sendsType(Mime::FORM)->send();
+                $result = $this->parseReturnXml($response->raw_body);
+                $mapper['return_info'] = $result['return_info'];
+                $mapper['return_status'] = $result['return_status'];
+                $mapper['return_xml'] = $result['return_xml'];
+                $mapper->save();
+            }
+
             $this->error['code'] = 0;
-            $receiver = new Receiver();
-            $result = $receiver->parseResult($response->raw_body);
             echo $this->jsonResponse([
-                'info' => $result['return_info'],
-                'status' => $result['return_status'],
-                'xml' => $result['xml']
+                'info' => $mapper['return_info'],
+                'status' => $mapper['return_status'],
+                'xml' => $mapper['xml']
             ]);
+        }
+    }
+
+    function parseReturnXml($xml)
+    {
+        try {
+            $parser = xml_parser_create();
+            xml_parse_into_struct($parser, $xml, $result, $index);
+
+            //$guid = $result[$index['CEBEXPINVTRETURNMESSAGE'][0]]['attributes']['GUID'];
+            //$returnGuid = $result[$index['GUID'][0]]['value'];
+            //$returnTime = $result[$index['RETURNTIME'][0]]['value'];
+            $returnInfo = $result[$index['RETURNINFO'][0]]['value'];
+            $returnStatus = $result[$index['RETURNSTATUS'][0]]['value'];
+
+            return [
+                'return_info' => $returnInfo,
+                'return_status' => $returnStatus,
+                'return_xml' => $xml
+            ];
+        } catch (\Exception $e) {
+            return [
+                'return_info' => $e->getMessage(),
+                'return_status' => $e->getCode(),
+                'return_xml' => $e->getTraceAsString()
+            ];
         }
     }
 }

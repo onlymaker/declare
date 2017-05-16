@@ -9,8 +9,7 @@
         <repeat group="{{@pageContent}}" value="{{@data}}">
             <tr>
                 <td>{{@data['trace_id']}}</td>
-                <td>{{@data['guid']}}</td>
-                <td>{{@data['status']}}</td>
+                <td>{{@data['return_info']}}</td>
                 <check if="{{@data['status'] == 0}}">
                     <true><td><div class="btn btn-primary submit" data="{{@data['id']}}">Report</div></td></true>
                     <false><td></td></false>
