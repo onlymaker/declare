@@ -3,7 +3,6 @@
 namespace app;
 
 use data\Database;
-use data\OrderDB;
 use DB\SQL\Mapper;
 use Httpful\Mime;
 use Httpful\Request;
@@ -30,23 +29,23 @@ class Creator
         $f3->set('cc', $cc);
         $f3->set('ap', $ap);
 
-        $mapper = new Mapper(Database::mysql(), 'export');
+        $db = Database::mysql();
+        $mapper = new Mapper($db, 'export');
         $mapper->load(['trace_id = ?', $f3->get('id')]);
         if (!$mapper->dry()) {
             return $mapper['xml']; // trace id already existed in export
         }
 
-        $odb = OrderDB::mysql();
-        $order = new Mapper($odb, 'order_item');
+        $order = new Mapper($db, 'order_item');
         $order->load(['trace_id = ?', $f3->get('id')]);
         if ($order->dry()) {
             return $f3->get('id'); // trace id not found in order
         }
 
-        $model = new Mapper($odb, 'prototype');
+        $model = new Mapper($db, 'prototype');
         $model->load(['ID = ?', $order['prototype_id']]);
 
-        $contact = new Mapper($odb, 'distribution');
+        $contact = new Mapper($db, 'distribution');
         $contact->load(['ID = ?', $order['distribution_id']]);
 
         $this->buildOrderInfo($f3, $order, $contact);
