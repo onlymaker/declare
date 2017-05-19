@@ -15,7 +15,7 @@
     <p class="help-block">excel内容不要超过100行</p>
 
     <form id="upload-form" enctype="multipart/form-data">
-        <input class="form-control" type="file" name="file"/>
+        <input id="upload-file" class="form-control" type="file" name="file"/>
         <button class="btn btn-default clear" type="button">清除</button>
         <button class="btn btn-primary upload" type="button">上传</button>
     </form>
@@ -35,9 +35,16 @@
     }
 
     function upload() {
+        var info = fileInfo(document.getElementById("upload-file"));
+        if (!checkFileType(info)) {
+            return alert("错误的文件类型");
+        }
+        if (!checkFileSize(info)) {
+            return alert("文件大小不要超过2M");
+        }
         $(".btn.upload").attr("disabled", true);
         $(".btn.upload").append("<i class='fa fa-spinner fa-spin'></i>");
-        // 不能上传 gif
+        // $.ajax 不能上传 gif
         $.ajax({
             url: "{{@BASE}}/upload",
             type: "POST",
@@ -62,6 +69,17 @@
                 $(".btn.upload").removeAttr("disabled");
                 $(".fa.fa-spinner.fa-spin").remove();
             })
+    }
+
+    function checkFileSize(info) {
+        var size = info ? info.size / 1024 / 1024 : -1;
+        console.log(info.name, 'size', size, 'M');
+        return (size != -1) && (size < 2);
+    }
+
+    function checkFileType(info) {
+        console.log(info.name, 'type', info.type);
+        return typeof info.type == 'string' ? ((info.type.indexOf('ms-excel') != -1) || (info.type.indexOf('openxmlformats') != -1)) : false;
     }
 </script>
 </body>

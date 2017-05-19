@@ -11,6 +11,10 @@ call_user_func(function ($f3) {
     if (!$f3->log) {
         $f3->config(SYSTEM . '/src/cfg/system.ini;' . SYSTEM . '/src/cfg/local.ini');
 
+        if ($f3->DEBUG) {
+            ini_set('opcache.enable', 0); // opcache will cache f3 template
+        }
+
         $f3->mset([
             'AUTOLOAD' => SYSTEM . '/src/',
             'LOGS' => SYSTEM . '/logs/'

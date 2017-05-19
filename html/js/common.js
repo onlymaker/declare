@@ -15,6 +15,10 @@ function deleteCookie(name) {
     setCookie(name, null);
 }
 
+function fileInfo(file) {
+    return file ? (file.files ? file.files[0] : {}) : {}
+}
+
 function todo() {
     alert("开发中...");
 }
