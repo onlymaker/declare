@@ -41,7 +41,11 @@ class Index extends AppBase
             $xml = str_replace('{{@serial}}', $next, $mapper['xml']);
 
             if (!$mapper['return_xml']) {
+                $f3->log('report ' . $mapper['trace_id']);
                 $response = Request::post($f3->get('DECLARE_URL'))->body(['xml' => $xml])->sendsType(Mime::FORM)->send();
+                ob_start();
+                var_dump($response);
+                $f3->log(ob_get_clean());
                 $result = $this->parseReturnXml($response->raw_body);
                 $mapper['return_info'] = $result['return_info'];
                 $mapper['return_status'] = $result['return_status'];
