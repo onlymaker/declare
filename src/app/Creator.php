@@ -196,7 +196,7 @@ class Creator
     function buildExpInventoryList($f3, $order, $model) {
         $this->expInventoryList['gnum'] = '{{@serial}}'; // set when report
         $this->expInventoryList['itemNo'] = '';
-        $this->expInventoryList['gcode'] = 6402990000;
+        $this->expInventoryList['gcode'] = 6402992900;
         $this->expInventoryList['gname'] = 'PU女鞋';
         $this->expInventoryList['gmodel'] = $model['model'];
         $this->expInventoryList['barCode'] = $order['trace_id'];
