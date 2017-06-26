@@ -81,7 +81,7 @@ class Creator
         $this->expOrderInfo['consigneeCountry'] = $f3->get('cc');
         $this->expOrderInfo['consigneeAddress'] = $contact['address'] . ' ' . $contact['city'] . ' ' . $contact['state'];
         $this->expOrderInfo['consigneeTel'] = $contact['phone'];
-        $this->expOrderInfo['consigneeEmail'] = $contact['email'];
+        $this->expOrderInfo['consigneeEmail'] = $contact['email'] ?? preg_replace('/\s/', '', $contact['name']) . '@gmail.com';
         $this->expOrderInfo['ebpCode'] = $f3->get('EBPCODE');
         $this->expOrderInfo['ebpName'] = $f3->get('EBPNAME');
     }
