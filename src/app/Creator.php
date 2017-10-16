@@ -204,7 +204,7 @@ class Creator
         $this->expInventoryList['currency'] = 142;
         $this->expInventoryList['qty'] = 1;
         $this->expInventoryList['qty1'] = 1;
-        $this->expInventoryList['qty2'] = 0;
+        $this->expInventoryList['qty2'] = 1;
         $this->expInventoryList['unit'] = '011';
         $this->expInventoryList['unit1'] = '011';
         $this->expInventoryList['unit2'] = '011';
