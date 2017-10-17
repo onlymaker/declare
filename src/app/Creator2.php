@@ -16,7 +16,7 @@ class Creator2
     private $data;
 
     function buildXml($f3, $data) {
-        $this->id = $data[0];
+        $this->id = trim($data[0]);
 
         $db = Database::mysql();
         $mapper = new Mapper($db, 'export');

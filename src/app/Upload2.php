@@ -49,15 +49,27 @@ class Upload2 extends \Web
         $f3 = \Base::instance();
         $creator = new Creator2();
         foreach ($rows as $i => $data) {
-            $creator->buildXml($f3, $data);
-            $f3->log(
-                '{excel} row {i}: {id} handled',
-                [
-                    'excel' => $file,
-                    'i' =>$i,
-                    'id' => $data[0]
-                ]
-            );
+            $id = trim($data[0]);
+            if (!empty($id) && !preg_match("/[\x7f-\xff]/", $id)) {
+                $creator->buildXml($f3, $data);
+                $f3->log(
+                    '{excel} row {i}: {id} handled',
+                    [
+                        'excel' => $file,
+                        'i' =>$i,
+                        'id' => $data[0]
+                    ]
+                );
+            } else {
+                $f3->log(
+                    '{excel} row {i}: {id} ignored',
+                    [
+                        'excel' => $file,
+                        'i' =>$i,
+                        'id' => $data[0]
+                    ]
+                );
+            }
         }
     }
 }
