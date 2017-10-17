@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+    <include href="common/header.html"/>
+    <style>
+        .form-control {
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<include href="common/navbar.html"/>
+<div class="container">
+    <form id="upload-form" enctype="multipart/form-data">
+        <input id="upload-file" class="form-control" type="file" name="file"/>
+        <button class="btn btn-default clear" type="button">清除</button>
+        <button class="btn btn-primary upload" type="button">上传</button>
+    </form>
+    <hr/>
+    <p class="help-block">Upload:</p>
+    <table class="table"></table>
+</div>
+<script>
+    $(function () {
+        $(".clear").on("click", clear);
+        $(".upload").on("click", upload);
+    })
+
+    function clear() {
+        $("input[type=file]").val("");
+        $("table").empty();
+    }
+
+    function upload() {
+        var info = fileInfo(document.getElementById("upload-file"));
+        if (!checkFileType(info)) {
+            console.log(info);
+        }
+        if (!checkFileSize(info)) {
+            return alert("文件大小不要超过2M");
+        }
+        $(".btn.upload").attr("disabled", true);
+        $(".btn.upload").append("<i class='fa fa-spinner fa-spin'></i>");
+        // $.ajax 不能上传 gif
+        $.ajax({
+            url: "{{@BASE}}/upload2",
+            type: "POST",
+            cache: false,
+            data: new FormData(document.getElementById("upload-form")),
+            contentType: false,
+            processData: false
+        })
+            .done(function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                if (data.type.indexOf('ms-excel') == -1) {
+                    data.url = 'invalid file type';
+                } else {
+                    data.url = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
+                }
+                var html = '<tr><td>' + data.name + '</td><td>' + data.url + '</td></tr>';
+                $(".table").append(html);
+            })
+            .fail(console.log)
+            .complete(function () {
+                $(".btn.upload").removeAttr("disabled");
+                $(".fa.fa-spinner.fa-spin").remove();
+            })
+    }
+
+    function checkFileSize(info) {
+        var size = info ? info.size / 1024 / 1024 : -1;
+        console.log(info.name, 'size', size, 'M');
+        return (size != -1) && (size < 2);
+    }
+
+    function checkFileType(info) {
+        console.log(info.name, 'type', info.type);
+        return typeof info.type == 'string' ? ((info.type.indexOf('ms-excel') != -1) || (info.type.indexOf('openxmlformats') != -1)) : false;
+    }
+</script>
+</body>
+</html>
