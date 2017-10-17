@@ -50,7 +50,11 @@
         })
     })
     function home() {
-        location.href = "{{@BASE}}/";
+        location.href = "{{@BASE}}/?pageNo=" + currentPage();
+    }
+    function currentPage() {
+        var page = getCookie("pageNo");
+        return !!page ? page : 1;
     }
 </script>
 </body>

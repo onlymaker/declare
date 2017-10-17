@@ -15,9 +15,13 @@ class Index extends AppBase
         $size = 20;
         $mapper = new Mapper(Database::mysql(), 'export');
         $count = ceil($mapper->count() / $size);
-        $pageNo = $_GET['pageNo'];
-        if ($pageNo < 1) $pageNo = 1;
-        else if ($pageNo > $count) $pageNo = $count;
+        $pageNo = $_GET['pageNo'] ?? 1;
+        if ($pageNo < 1) {
+            $pageNo = 1;
+        } else if ($pageNo > $count) {
+            $pageNo = $count;
+        }
+        setcookie('pageNo', $pageNo, 0, '/');
         $page = $mapper->paginate($pageNo - 1, $size);
         $f3->set('title', 'Index');
         $f3->set('pageNo', $pageNo);
