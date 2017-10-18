@@ -12,7 +12,6 @@
     $(function () {
         $("#nav-holder").css("height", $("nav.navbar-fixed-top").height());
         var base = "{{@BASE}}";
-        var host = location.host;
         var prefix = location.protocol + "//" + location.host + base;
         var url = location.href.substr(prefix.length);
         if (url.indexOf("?") != -1) {
