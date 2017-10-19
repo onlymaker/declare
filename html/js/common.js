@@ -15,6 +15,11 @@ function deleteCookie(name) {
     setCookie(name, null);
 }
 
+function currentPage() {
+    var page = getCookie("pageNo");
+    return !!page ? page : 1;
+}
+
 function fileInfo(file) {
     return file ? (file.files ? file.files[0] : {}) : {}
 }

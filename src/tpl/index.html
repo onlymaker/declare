@@ -23,10 +23,15 @@
 <script>
     $(function () {
         var html = "";
+        var pageNo = currentPage();
         var pageCount = "{{@pageCount}}";
         for (var i = 1; i <= pageCount; i++) {
             var url = "{{@BASE}}?pageNo=" + i;
-            html += '<li><a href="' + url + '">' + i + "</a></li>";
+            if (pageNo == i) {
+                html += '<li class="active"><a href="' + url + '">' + i + "</a></li>";
+            } else {
+                html += '<li><a href="' + url + '">' + i + "</a></li>";
+            }
         }
         $(".pagination").append(html);
         $(".submit").click(function () {
