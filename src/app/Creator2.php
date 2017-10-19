@@ -91,8 +91,8 @@ class Creator2
         $this->expInventoryHead['ebcName'] = $f3->get('EBCNAME');
         $this->expInventoryHead['productCode'] = '9151010032742290X5';
         $this->expInventoryHead['productName'] = '成都欧魅时尚科技有限责任公司';
-        $this->expInventoryHead['logisticsCode'] = '5101982029';
-        $this->expInventoryHead['logisticsName'] = '四川省邮政速递服务有限公司';
+        $this->expInventoryHead['logisticsCode'] = '5101989827';
+        $this->expInventoryHead['logisticsName'] = '成都嘉航报关服务有限公司';
         $this->expInventoryHead['logisticsNo'] = $this->data[$info['B']];
         $this->expInventoryHead['preNo'] = '';
         $this->expInventoryHead['invtNo'] = '';
@@ -103,8 +103,8 @@ class Creator2
         $this->expInventoryHead['ieDate'] = $this->data[$info['M']];
         $this->expInventoryHead['agentCode'] = '510196552A';
         $this->expInventoryHead['agentName'] = '成都欧魅时尚科技有限责任公司';
-        $this->expInventoryHead['areaCode'] = '5101982029';
-        $this->expInventoryHead['areaName'] = '四川省邮政速递服务有限公司';
+        $this->expInventoryHead['areaCode'] = '5101989827';
+        $this->expInventoryHead['areaName'] = '成都嘉航报关服务有限公司';
         $this->expInventoryHead['tradeMode'] = 9610;
         $this->expInventoryHead['trafMode'] = 5;
         $this->expInventoryHead['trafNo'] = '';
